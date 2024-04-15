@@ -89,7 +89,7 @@ gcloud config get project
 For convenience set your set your destination bucket and as an environment variable.
 
 ``` bash
-export CONNECT_GCS_BUCKET=gs://YOUR_SITES_BUCKET/
+export CONNECT_GCS_BUCKET=gs://YOUR_SITES_BUCKET
 echo $CONNECT_GCS_BUCKET
 ```
 
