@@ -10,8 +10,8 @@
     -   [Step 3: Upload the file to GCS Bucket](#step-3)
 -   [References](#references)
 
-
-## Introduction <a name="introduction"></a> 
+<a name="introduction"></a> 
+## Introduction 
 
 This guide provides detailed instructions on how to upload EMR files to Google Cloud Storage (GCS) using the `gcloud` CLI. This is the simplest method for uploading files to GCS buckets. However, you can also using [REST APIs](https://cloud.google.com/storage/docs/uploading-objects#rest-upload-objects) or [Google's client libraries](https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-client-libraries) in Python, C++, Java, Node.js, etcetera.
 
