@@ -17,13 +17,16 @@ This guide provides detailed instructions on how to upload EMR files to Google C
 
 > ***Note:*** In order to access the GCS bucket by any of the methods listed above, you must have a Google Account associated with your institutional email address. Provide this email address to the Connect Coordinating Center who will provide you with write permissions for your site's GCS bucket.
 
-## Step-by-step Guide <a name="step-by-step-guide"></a> 
+<a name="step-by-step-guide"></a> 
+## Step-by-step Guide 
 
-### Step 0: Install `gcloud` CLI <a name="step-0"></a>
+<a name="step-0"></a>
+### Step 0: Install `gcloud` CLI 
 
 The Google Cloud Command Line Interface (CLI) allows you to interact with Google Cloud services, including Google Cloud Storage, directly from the command line or with scripts. Before using this tool, follow the installation guide here: <https://cloud.google.com/sdk/docs/install>
 
-### Step 1: Login <a name="step-1"></a>
+<a name="step-1"></a>
+### Step 1: Login 
 
 To log in, paste the code below in the terminal and hit `return`. You should be prompted to login in a browser window using your the email/password associated with your google account. If you are prompted with "Google Cloud SDK wants to access your Google Account", click `Allow`.
 
@@ -47,7 +50,8 @@ You should see an asterisk next to the email address associated with your google
 gcloud config set account <YOUR_EMAIL_ADDRESS>
 ```
 
-### Step 2: Set the GCP Project. <a name="step-2"></a>
+<a name="step-2"></a>
+### Step 2: Set the GCP Project. 
 
 Set the Connect GCP Project IDs as environment variables.
 
@@ -79,7 +83,8 @@ gcloud config get project
 
 ![](images/gcs-upload-tutorial/gcloud-config-get-project.png)
 
-### Step 3: Upload file to GCS bucket <a name="step-3"></a>
+<a name="step-3"></a>
+### Step 3: Upload file to GCS bucket 
 
 For convenience set your set your destination bucket and as an environment variable.
 
@@ -104,7 +109,8 @@ If your file was successfully uploaded you should see the file listed as output 
 
 ![](images/gcs-upload-tutorial/gcloud-storage-cp.png)
 
-## References <a name="references"></a>
+<a name="references"></a>
+## References 
 
 -   <https://cloud.google.com/sdk/docs/install>
 -   <https://cloud.google.com/storage/docs/uploading-objects>
