@@ -1,7 +1,7 @@
 ---
 title: Uploading EMR Data to a GCS Bucket
 author: Jake Peters
-date: today
+date: Apr 15
 ---
 
 ## Table of Contents
