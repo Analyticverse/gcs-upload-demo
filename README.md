@@ -14,9 +14,11 @@
 
 This guide provides detailed instructions on how to upload EMR files to Google Cloud Storage (GCS) using the `gcloud` CLI. This is the simplest method for uploading files to GCS buckets. However, you can also using [REST APIs](https://cloud.google.com/storage/docs/uploading-objects#rest-upload-objects) or [Google's client libraries](https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-client-libraries) in Python, C++, Java, Node.js, etcetera.
 
-> ***Note:*** In order to access the GCS bucket by any of the methods listed above, you must have a Google Account associated with your institutional email address. Provide this email address to the Connect Coordinating Center who will provide you with write permissions for your site's GCS bucket.
+:::{.callout-note} 
+In order to access the GCS bucket by any of the methods listed above, you **must have a Google Account associated with your institutional email address**. Provide this email address to the Connect Coordinating Center who will provide you with write permissions for your site's GCS bucket.
+:::
 
-## Step-by-step Guide <a name="step-by-step-guide"></a> 
+## Step-by-step Guide <a name="step-by-step-guide"></a> {#step-by-step-guide}
 
 ### Step 0: Install `gcloud` CLI <a name="step-0"></a>
 
@@ -43,7 +45,7 @@ gcloud auth list
 You should see an asterisk next to the email address associated with your google account. If you have multiple accounts and the desired account is not indicated by the asterisk, you can change the selected account with
 
 ``` bash
-gcloud config set account <YOUR_EMAIL_ADDRESS>
+gcloud config set account petersjm@nih.gov
 ```
 
 ### Step 2: Set the GCP Project. <a name="step-2"></a>
@@ -52,16 +54,12 @@ Set the Connect GCP Project IDs as environment variables.
 
 ``` bash
 export CONNECT_DEV=nih-nci-dceg-connect-dev
-export CONNECT_STG=nih-nci-dceg-connect-prod-6d04
-export CONNECT_PROD=nih-nci-dceg-connect-prod-5519
 ```
 
 Verify that they are set as expected.
 
 ``` bash
 echo $CONNECT_DEV
-echo $CONNECT_STG
-echo $CONNECT_PROD
 ```
 
 Set the project to using the appropriate environment, e.g., DEV.
@@ -72,7 +70,7 @@ gcloud config set project $CONNECT_DEV
 
 Verify that your project is set.
 
-```         
+``` bash         
 gcloud config get project
 ```
 
@@ -83,27 +81,39 @@ gcloud config get project
 For convenience set your set your destination bucket and as an environment variable.
 
 ``` bash
-export CONNECT_GCS_BUCKET=gs://YOUR_SITES_BUCKET/
+export CONNECT_GCS_BUCKET=gs://site_emr_henry_ford/
 echo $CONNECT_GCS_BUCKET
+```
+
+Check what is currently in the bucket
+
+``` bash
+gcloud storage ls ${CONNECT_GCS_BUCKET}
 ```
 
 Copy the EMR file from your local filesystem to the GCS bucket.
 
 ``` bash
-gcloud storage cp <PATH/TO/YOUR_EMR_FILE.CSV> $CONNECT_GCS_BUCKET
+gcloud storage cp test_emr_file.csv $CONNECT_GCS_BUCKET
 ```
 
 Ensure that your file is uploaded to the bucket.
 
 ``` bash
-gcloud storage ls ${CONNECT_GCS_BUCKET}/<YOUR_EMR_FILE.CSV>
+gcloud storage ls ${CONNECT_GCS_BUCKET}
 ```
+
+:::{.callout-note} 
+If you have write-only access for the bucket, you may need to use <br>
+```gcloud storage ls ${CONNECT_GCS_BUCKET}test_emr_file.csv``` 
+instead. 
+:::
 
 If your file was successfully uploaded you should see the file listed as output in the terminal.
 
 ![](images/gcs-upload-tutorial/gcloud-storage-cp.png)
 
-## References <a name="references"></a>
+## References <a name="references"></a> {#references}
 
 -   <https://cloud.google.com/sdk/docs/install>
 -   <https://cloud.google.com/storage/docs/uploading-objects>
