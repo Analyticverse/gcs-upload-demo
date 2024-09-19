@@ -15,19 +15,13 @@
 
 This guide provides detailed instructions on how to upload EMR files to Google Cloud Storage (GCS) using the `gcloud` CLI. This is the simplest method for uploading files to GCS buckets. However, you can also using [REST APIs](https://cloud.google.com/storage/docs/uploading-objects#rest-upload-objects) or [Google's client libraries](https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-client-libraries) in Python, C++, Java, Node.js, etcetera.
 
-<<<<<<< HEAD
-:::{.callout-note} 
-In order to access the GCS bucket by any of the methods listed above, you **must have a Google Account associated with your institutional email address**. Provide this email address to the Connect Coordinating Center who will provide you with write permissions for your site's GCS bucket.
-:::
 
-## Step-by-step Guide <a name="step-by-step-guide"></a> {#step-by-step-guide}
-=======
 > [!NOTE]
 > In order to access the GCS bucket by any of the methods listed above, you must have a Google Account associated with your institutional email address. Provide this email address to the Connect Coordinating Center who will provide you with write permissions for your site's GCS bucket.
 
 <a name="step-by-step-guide"></a> 
 ## Step-by-step Guide 
->>>>>>> 9390f4ca28bb8c3dfcd76f43e15a6ab488b85424
+
 
 <a name="step-0"></a>
 ### Step 0: Install `gcloud` CLI 
@@ -94,11 +88,7 @@ gcloud config get project
 For convenience set your set your destination bucket and as an environment variable.
 
 ``` bash
-<<<<<<< HEAD
-export CONNECT_GCS_BUCKET=gs://site_emr_henry_ford/
-=======
 export CONNECT_GCS_BUCKET=gs://YOUR_SITES_BUCKET
->>>>>>> 9390f4ca28bb8c3dfcd76f43e15a6ab488b85424
 echo $CONNECT_GCS_BUCKET
 ```
 
@@ -120,22 +110,17 @@ Ensure that your file is uploaded to the bucket.
 gcloud storage ls ${CONNECT_GCS_BUCKET}
 ```
 
-:::{.callout-note} 
-If you have write-only access for the bucket, you may need to use <br>
-```gcloud storage ls ${CONNECT_GCS_BUCKET}test_emr_file.csv``` 
-instead. 
-:::
+
+> If you have write-only access for the bucket, you may need to use <br>
+> ```gcloud storage ls ${CONNECT_GCS_BUCKET}test_emr_file.csv``` 
+> instead. 
+
 
 If your file was successfully uploaded you should see the file listed as output in the terminal.
 
 ![](images/gcs-upload-tutorial/gcloud-storage-cp.png)
 
-<<<<<<< HEAD
-## References <a name="references"></a> {#references}
-=======
-<a name="references"></a>
-## References 
->>>>>>> 9390f4ca28bb8c3dfcd76f43e15a6ab488b85424
 
+## References <a name="references"></a> {#references}
 -   <https://cloud.google.com/sdk/docs/install>
 -   <https://cloud.google.com/storage/docs/uploading-objects>
