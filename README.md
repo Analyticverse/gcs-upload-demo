@@ -121,6 +121,6 @@ If your file was successfully uploaded you should see the file listed as output 
 ![](images/gcs-upload-tutorial/gcloud-storage-cp.png)
 
 
-## References <a name="references"></a> {#references}
+## References <a name="references"></a> 
 -   <https://cloud.google.com/sdk/docs/install>
 -   <https://cloud.google.com/storage/docs/uploading-objects>
