@@ -2,7 +2,7 @@
 
 ### Goal
 
-This SOP is intended to guide participating **Integrated Health Care Sites** in securely uploading **EHR data** to the designated Google Cloud Storage (GCS) buckets at the **Connect Coordinating Center**. Two methods are provided to accommodate different security policies regarding CLI usage. 
+This tutorial is intended to guide participating **Integrated Health Care Sites** in securely uploading **EHR data** to the designated Google Cloud Storage (GCS) buckets at the **Connect Coordinating Center**. Two methods are provided to accommodate different security policies regarding CLI usage. 
 
 ---
 
