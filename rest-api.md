@@ -1,20 +1,28 @@
-## Demo: Using REST API for Uploading a EHR to Google Cloud Storage (GCS)
+## Demo: Uploading a CSV or JSONL File to Google Cloud Storage (GCS)
 
 ### Goal
 
-This tutorial is intended to guide participating **Integrated Health Care Sites** in securely uploading **EHR data** to the designated Google Cloud Storage (GCS) buckets at the **Connect Coordinating Center**. Two methods are provided to accommodate different security policies regarding CLI usage. 
+This tutorial is intended to guide participating **Integrated Health Care Sites** in securely uploading **EHR data** to the designated Google Cloud Storage (GCS) buckets at the **Connect Coordinating Center**. This document outlines how to upload files using the REST API, with considerations for different file types (e.g., CSV, JSON, JSONL) and the use of absolute vs. relative file paths. Two methods are provided to accommodate different security policies regarding CLI usage.
 
 ---
 
 ### Prerequisites
 
 - You must have a GCS bucket to upload your file.
-- Your Google Cloud project must have the necessary APIs enabled (Google Cloud Storage API).
 - You should have appropriate permissions to upload files to the GCS bucket.
 
 ---
 
-### Method 1: Uploading CSV to GCS Using `gcloud auth print-access-token`
+### File Types
+
+Depending on the file type you are uploading, the `Content-Type` header must be set correctly:
+
+- **CSV files**: Use `text/csv`.
+- **JSONL (Newline-delimited JSON) files**: Use `application/json` or `application/x-ndjson`.
+
+---
+
+### Method 1: Uploading Files to GCS Using `gcloud auth print-access-token`
 
 #### Step 1: Obtain Access Token using `gcloud`
 
@@ -26,27 +34,45 @@ gcloud auth print-access-token
 
 This will print an OAuth 2.0 access token.
 
-#### Step 2: Upload CSV to GCS
+#### Step 2: Upload File to GCS
 
 Replace the placeholders in the following `curl` command with your details:
 
-- `OBJECT_LOCATION`: Local path to your CSV file.
-- `OBJECT_CONTENT_TYPE`: The MIME type of the file (e.g., `text/csv`).
-- `BUCKET_NAME`: The name of your GCS bucket.
-- `OBJECT_NAME`: The desired name of the object in the GCS bucket.
+- **File Path**: Use the relative or full path to the file, e.g., `@/Users/username/Documents/test.csv` for a full path or `@test.csv` if it's in your current directory.
+- **Content-Type**: Depending on your file type:
+  - For CSV: `text/csv`
+  - For JSONL: `application/x-ndjson` or `application/json`
+- **Bucket Name**: The name of your GCS bucket.
+- **Object Name**: The desired name of the file in the GCS bucket.
 
+##### Example for CSV File:
 ```bash
-curl -X POST --data-binary @OBJECT_LOCATION \
+curl -X POST --data-binary @/Users/username/Documents/test.csv \
   -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-  -H "Content-Type: OBJECT_CONTENT_TYPE" \
-  "https://storage.googleapis.com/upload/storage/v1/b/BUCKET_NAME/o?uploadType=media&name=OBJECT_NAME"
+  -H "Content-Type: text/csv" \
+  "https://storage.googleapis.com/upload/storage/v1/b/ehr_sanford/o?uploadType=media&name=test.csv"
 ```
 
-This will upload the specified CSV file to the GCS bucket.
+##### Example for JSONL File:
+```bash
+curl -X POST --data-binary @/Users/username/Documents/data.jsonl \
+  -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+  -H "Content-Type: application/x-ndjson" \
+  "https://storage.googleapis.com/upload/storage/v1/b/ehr_sanford/o?uploadType=media&name=data.jsonl"
+```
+
+If your file is in the current directory, you can use a **relative path** like this:
+
+```bash
+curl -X POST --data-binary @test.csv \
+  -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+  -H "Content-Type: text/csv" \
+  "https://storage.googleapis.com/upload/storage/v1/b/ehr_sanford/o?uploadType=media&name=test.csv"
+```
 
 ---
 
-### Method 2: Uploading CSV to GCS Without Using the `gcloud` CLI
+### Method 2: Uploading Files to GCS Without Using the `gcloud` CLI
 
 #### Step 1: Set up OAuth Credentials
 
@@ -91,23 +117,25 @@ curl -X POST \
 
 The response will include an `access_token`, which can be used for authentication.
 
-#### Step 4: Upload CSV to GCS
+#### Step 4: Upload File to GCS
 
-Now that you have the access token, replace the placeholders in the following `curl` command:
+Now that you have the access token, replace the placeholders in the following `curl` command with the appropriate file path, content type, and bucket/object names.
 
-- `YOUR_CSV_FILE_PATH`: Path to the CSV file on your local machine.
-- `YOUR_ACCESS_TOKEN`: The access token obtained in Step 3.
-- `YOUR_BUCKET_NAME`: The name of the GCS bucket.
-- `YOUR_OBJECT_NAME`: The name to use for the uploaded file in GCS.
-
+##### Example for CSV File:
 ```bash
-curl -X POST --data-binary @YOUR_CSV_FILE_PATH \
+curl -X POST --data-binary @/Users/username/Documents/test.csv \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: text/csv" \
-  "https://storage.googleapis.com/upload/storage/v1/b/YOUR_BUCKET_NAME/o?uploadType=media&name=YOUR_OBJECT_NAME"
+  "https://storage.googleapis.com/upload/storage/v1/b/YOUR_BUCKET_NAME/o?uploadType=media&name=test.csv"
 ```
 
-This command will upload the CSV file to the specified bucket.
+##### Example for JSONL File:
+```bash
+curl -X POST --data-binary @/Users/username/Documents/data.jsonl \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Content-Type: application/x-ndjson" \
+  "https://storage.googleapis.com/upload/storage/v1/b/YOUR_BUCKET_NAME/o?uploadType=media&name=data.jsonl"
+```
 
 ---
 
@@ -131,5 +159,4 @@ This will return a new access token without requiring you to go through the auth
 
 ### Conclusion
 
-This SOP provides two methods for uploading a CSV file to Google Cloud Storage (GCS). The first method leverages the `gcloud` CLI to obtain an access token, while the second method uses OAuth 2.0 to manually retrieve an access token without relying on the CLI.
-
+This SOP provides two methods for uploading a CSV or JSONL file to Google Cloud Storage (GCS). It includes details on how to specify file types and the appropriate `Content-Type` headers, as well as instructions for using both absolute and relative paths.
